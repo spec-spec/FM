@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="490.0" prefWidth="433.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <SplitPane dividerPositions="0.48259860788863107" prefHeight="366.0" prefWidth="433.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="363.0" prefWidth="205.0">
+               <children>
+                  <ListView layoutX="3.0" prefHeight="364.0" prefWidth="200.0" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="389.0" prefWidth="220.0">
+               <children>
+                  <ListView layoutX="-6.0" layoutY="-1.0" prefHeight="364.0" prefWidth="220.0" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
