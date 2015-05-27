@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MultipleSelectionModel;
+import javafx.scene.input.MouseEvent;
 import ua.oa.taras.fm.filemanager.Filer;
 
 public class FmController implements Initializable  {
@@ -39,16 +40,35 @@ public class FmController implements Initializable  {
 				});
 		
 	}
-	private void setDirectory(File dir, ListView<File> lv){
-		File[] list = dir.listFiles();
-		ObservableList<File> listOfFiles = FXCollections
-				.observableArrayList(list);
-		lv.setItems(listOfFiles);
-	}
+	
 	public void setDirectoryLeft(File dir){
-		setDirectory( dir, leftFilesListView);
+		File[] list = dir.listFiles();
+		ObservableList<File> leftListOfFiles = FXCollections
+				.observableArrayList(list);
+		leftFilesListView.setItems(leftListOfFiles);
 	}
 	public void setDirectoryRight(File dir){
-		setDirectory( dir, rightFilesListView);
+		File[] list = dir.listFiles();
+		ObservableList<File> rightListOfFiles = FXCollections
+				.observableArrayList(list);
+		rightFilesListView.setItems(rightListOfFiles);
+	}
+	@FXML
+	public void enterLeftDirectory(MouseEvent mouseEvent){
+		if (mouseEvent.getClickCount()==2){
+		File currentFile = leftFilesListView.getSelectionModel().getSelectedItem();
+		if (currentFile.isDirectory()) {
+			setDirectoryLeft(currentFile);
+		}
+		}
+	}
+	@FXML
+	public void enterRightDirectory(MouseEvent mouseEvent){
+		if (mouseEvent.getClickCount()==2){
+		File currentFile = rightFilesListView.getSelectionModel().getSelectedItem();
+		if (currentFile.isDirectory()) {
+			setDirectoryRight(currentFile);
+		}
+		}
 	}
 }
