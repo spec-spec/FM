@@ -4,6 +4,7 @@ import java.awt.List;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.logging.Logger;
 
 import javafx.stage.Stage;
@@ -32,16 +33,30 @@ public class Filer {
 		}
 	}
 
-	public void deleteFile(File f) {
-		if (f.isFile()) {
-			f.delete();
+	public void deleteFile(File selected) {
+		if (selected.isFile()) {
+			selected.delete();
 		}
-		if (f.isDirectory()) {
-			File[] list = f.listFiles();
-			for (int i = 0; i < list.length; i++) {
-				deleteFile(list[i]);
+		if (selected.isDirectory()) {
+			File[] dirFiles = selected.listFiles();
+			for (int i = 0; i < dirFiles.length; i++) {
+				deleteFile(dirFiles[i]);
 			}
-			f.delete();
+			selected.delete();
 		}
 	}
+	public void filesCopy(File source, Path target) throws IOException
+	{ log.info("try copy " + source.toString()+ " to "+ target.toString());
+			if(source.isFile()){
+			Files.copy(source.toPath(), target.resolve(source.getName()));}
+			if(source.isDirectory()){
+				Files.copy(source.toPath(), target.resolve(source.getName()));
+				Path innerPath=target.resolve(source.getName());
+				File[] innerFiles =source.listFiles();
+				for (int i = 0; i < innerFiles.length; i++) {
+				filesCopy(innerFiles[i],innerPath);
+			}
+			}
+		}
+	
 }

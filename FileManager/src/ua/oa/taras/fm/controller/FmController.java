@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -32,10 +33,11 @@ public class FmController implements Initializable {
 	@FXML
 	private Label rightSideLabel;
 
-	Filer fileMethod = new Filer();
-	String currentLeftDir;
-	String currentRightDir;
-	ObservableList<File> leftListOfFiles;
+	private Filer fileMethod = new Filer();
+	private  String currentLeftDir;
+	private  Path currentRightDir;
+	private ObservableList<File> leftListOfFiles;
+	private ObservableList<File> rightListOfFiles;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		leftFilesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -51,10 +53,10 @@ public class FmController implements Initializable {
 
 	public void setDirectoryRight(File dir) {
 		File[] list = dir.listFiles();
-		ObservableList<File> rightListOfFiles = FXCollections.observableArrayList(list);
+		rightListOfFiles = FXCollections.observableArrayList(list);
 		rightFilesListView.setItems(rightListOfFiles);
-		currentRightDir = dir.toString();
-		rightSideLabel.setText(currentRightDir);
+		currentRightDir = dir.toPath();
+		rightSideLabel.setText(currentRightDir.toString());
 	}
 
 	@FXML
@@ -88,19 +90,15 @@ public class FmController implements Initializable {
 
 	@FXML
 	public void copy(ActionEvent event) {
-	ObservableList<File>sourcelist = leftFilesListView.getSelectionModel().getSelectedItems();
-		for(File source:sourcelist){
-		if (source != null) {
-			File dest = new File(currentRightDir + "\\" + source.getName());
-			actlog.info(" copy source " + source.toPath() + " dest " + dest.toPath());
-			try {
-				Files.copy(source.toPath(), dest.toPath());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+	ObservableList<File>source = leftFilesListView.getSelectionModel().getSelectedItems();
+	for(File file:source){
+		try {
+			fileMethod.filesCopy(file, currentRightDir);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		}
-		
 	}
 
 	@FXML
