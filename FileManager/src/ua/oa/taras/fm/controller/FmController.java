@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import ua.oa.taras.fm.filemanager.Filer;
@@ -34,14 +35,15 @@ public class FmController implements Initializable {
 	Filer fileMethod = new Filer();
 	String currentLeftDir;
 	String currentRightDir;
-
+	ObservableList<File> leftListOfFiles;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		leftFilesListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 	}
 
 	public void setDirectoryLeft(File dir) {
 		File[] list = dir.listFiles();
-		ObservableList<File> leftListOfFiles = FXCollections.observableArrayList(list);
+		leftListOfFiles = FXCollections.observableArrayList(list);
 		leftFilesListView.setItems(leftListOfFiles);
 		currentLeftDir = dir.toString();
 		leftSideLabel.setText(currentLeftDir);
@@ -86,7 +88,8 @@ public class FmController implements Initializable {
 
 	@FXML
 	public void copy(ActionEvent event) {
-		File source = leftFilesListView.getSelectionModel().getSelectedItem();
+	ObservableList<File>sourcelist = leftFilesListView.getSelectionModel().getSelectedItems();
+		for(File source:sourcelist){
 		if (source != null) {
 			File dest = new File(currentRightDir + "\\" + source.getName());
 			actlog.info(" copy source " + source.toPath() + " dest " + dest.toPath());
@@ -96,12 +99,17 @@ public class FmController implements Initializable {
 				e.printStackTrace();
 			}
 		}
+		}
+		
 	}
 
 	@FXML
 	public void deleteItem(ActionEvent event) {
-		File source = leftFilesListView.getSelectionModel().getSelectedItem();
+		ObservableList<File>sourcelist = leftFilesListView.getSelectionModel().getSelectedItems();
+		for(File source:sourcelist){
 		fileMethod.deleteFile(source);
+		}
+		leftListOfFiles.removeAll(sourcelist);
 	}
 
 }

@@ -1,5 +1,6 @@
 package ua.oa.taras.fm.filemanager;
 
+import java.awt.List;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,6 +43,5 @@ public class Filer {
 			}
 			f.delete();
 		}
-
 	}
 }
