@@ -15,7 +15,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import ua.oa.taras.fm.filemanager.Filer;
+import ua.oa.taras.fm.filemanager.FileUtils;
 
 public class FmController implements Initializable {
 	@FXML
@@ -29,7 +29,7 @@ public class FmController implements Initializable {
 	@FXML
 	private Label rightSideLabel;
 
-	private Filer fileMethod = new Filer();
+	private FileUtils fileMethod = new FileUtils();
 	private Path currentLeftDir;
 	private Path currentRightDir;
 	private ObservableList<File> leftListOfFiles;

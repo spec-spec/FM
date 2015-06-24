@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-public class Filer {
+public class FileUtils {
 
 	public boolean createFile(Path path, String fileName) {
 		L.debug("create file function" + path + fileName);
